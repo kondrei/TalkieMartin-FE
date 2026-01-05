@@ -1,21 +1,3 @@
-.app-shell {
-  width: 100%;
-  max-width: 1200px;
-  background: #fff;
-  border-radius: 32px;
-  box-shadow: var(--shadow-soft);
-  padding: 20px;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .app-shell {
-    border-radius: 0;
-    box-shadow: none;
-    padding: 16px 14px 24px;
-  }
-}
-/* Hero + pills row */
 .hero-row {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -30,7 +12,6 @@
   color: #fff;
   position: relative;
   overflow: hidden;
-  
 }
 
 .hero-title {
@@ -125,10 +106,9 @@
   cursor: pointer;
 }
 
-/* Gallery */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 12px;
 }
 
@@ -138,10 +118,12 @@
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
   position: relative;
-  /* cursor: pointer; */
 }
 a.photo-card,
-a.photo-card:visited { color: inherit; text-decoration: none; }
+a.photo-card:visited {
+  color: inherit;
+  text-decoration: none;
+}
 
 a.photo-card:focus,
 a.photo-card:active {
@@ -150,14 +132,22 @@ a.photo-card:active {
   background: transparent;
 }
 
-a.photo-card { -webkit-tap-highlight-color: transparent; }
+a.photo-card {
+  -webkit-tap-highlight-color: transparent;
+}
 
-.photo-img {
+.photo-card > img {
   width: 100%;
-  aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
 }
+.photo-img > img {
+  float: left;
+   width:  300px;
+   height: 300px;
+   object-fit: cover;
+}
+
 
 .photo-top {
   position: absolute;
@@ -171,7 +161,7 @@ a.photo-card { -webkit-tap-highlight-color: transparent; }
   background: rgba(255, 255, 255, 0.96);
   border-radius: 999px;
   padding: 4px 8px;
-  font-size: 11px;
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -186,8 +176,7 @@ a.photo-card { -webkit-tap-highlight-color: transparent; }
   padding: 4px 10px;
   font-weight: 500;
 }
-
-/* Mobile-first adjustments */
+/* 
 @media (max-width: 768px) {
   .hero-row {
     grid-template-columns: minmax(0, 1fr);
@@ -202,4 +191,4 @@ a.photo-card { -webkit-tap-highlight-color: transparent; }
   .gallery-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-}
+} */

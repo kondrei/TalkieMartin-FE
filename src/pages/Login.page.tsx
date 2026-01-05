@@ -4,6 +4,8 @@ import { useApiFetch } from '@/utils/api.calls';
 
 import '../css/Login.page.css';
 
+import { authService } from '@/auth/auth.service';
+
 export default function Login({ message }: { message?: string }) {
   const { fetchData, loading, error } = useApiFetch();
   const navigate = useNavigate();
@@ -24,7 +26,9 @@ export default function Login({ message }: { message?: string }) {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validate()) {return;}
+    if (!validate()) {
+      return;
+    }
 
     const data = await fetchData(`${import.meta.env.VITE_API_URL}/auth/login`, {
       method: 'POST',
@@ -33,10 +37,12 @@ export default function Login({ message }: { message?: string }) {
         password: values.password,
       }),
     });
-
-    if (data) {
+    const userData = await authService.getUserData(data.access_token);
+    if (data && userData) {
       localStorage.setItem('authToken', data.access_token);
       navigate('/');
+    } else {
+      setValidationErrors({ ...validationErrors, password: 'Invalid email or password' });
     }
   };
 
