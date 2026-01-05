@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useApiFetch } from '@/utils/api.calls';
 import { Link } from 'react-router-dom';
 import { GalleryData } from '@/types/gallery.type';
-
+import { useApiFetch } from '@/utils/api.calls';
 
 export default function Gallery() {
   const [gallery, setGallery] = useState<GalleryData | null>(null);
@@ -27,8 +26,7 @@ export default function Gallery() {
     <>
       {gallery?.data?.length && (
         <section className="gallery-grid" aria-label="Recent photos">
-          {gallery.data.map((item: any, id: number) => {
-
+          {gallery?.data?.map((item: any, id: number) => {
             return (
               <Link key={id} to={`/memories/${item.title}`} className="photo-card">
                 <div className="photo-top">
@@ -38,7 +36,10 @@ export default function Gallery() {
                 <div className="photo-footer">{item.title}</div>
 
                 <div className="photo-img">
-                  <img src={item.memoryContent[0].filePath as string} alt={(item.memoryContent[0].description as string) || ''} width="300" height="300" />
+                  <img
+                    src={item?.memoryContent[0]?.filePath as string}
+                    alt={(item?.memoryContent[0]?.description as string) || ''}
+                  />
                 </div>
               </Link>
             );

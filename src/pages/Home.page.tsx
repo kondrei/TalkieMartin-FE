@@ -1,16 +1,16 @@
+import type { ReactNode } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import '../css/home.page.css';
 
 import Gallery from '@/components/gallery';
 import TopBar from '@/components/top-bar';
-import { Memories } from './Memories.page';
 
-export function HomePage() {
+export function HomePage({ children }: { children?: ReactNode }) {
   return (
-    <div className="app-shell">
+    <div>
       <TopBar />
-      <Outlet />
+      {children ?? <Outlet />}
     </div>
   );
 }
