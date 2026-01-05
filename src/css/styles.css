@@ -1,0 +1,135 @@
+:root {
+  --bg: #fff7f2;
+  --card: #ffffff;
+  --text-main: #222222;
+  --text-soft: #6b6b6b;
+  --pill-holidays: #79e3c9;
+  --pill-adventures: #f7b3d4;
+  --pill-everyday: #ffe27a;
+  --pill-outline: rgba(0, 0, 0, 0.06);
+  --hero-start: #ff8a5c;
+  --hero-end: #ff5f6c;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+  --shadow-soft: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 16px;
+  color: var(--text-main);
+}
+
+
+input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  width: 350px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+input.input-error {
+  border-color: #d32f2f;
+}
+
+
+.button {
+  padding: 10px 24px;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button:hover:not(:disabled) {
+  background: #1565c0;
+}
+
+.button:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.login-message {
+  color: #d32f2f;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #ffebee;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: auto;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.required {
+  color: #d32f2f;
+}
+
+.error-text {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.error-message {
+  color: #d32f2f;
+  background: #ffebee;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-top: 8px;
+  text-wrap-mode: nowrap;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+
