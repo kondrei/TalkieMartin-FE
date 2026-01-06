@@ -12,6 +12,7 @@
   --radius-lg: 24px;
   --radius-pill: 999px;
   --shadow-soft: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  --gradient: linear-gradient(to right, #7474bf 0%, #348ac7 51%, #7474bf 100%)
 }
 
 #container {
@@ -92,19 +93,25 @@ input.input-error {
 }
 
 .button {
-  padding: 10px 24px;
-  background: #1976d2;
+  background-image: linear-gradient(to right, #7474bf 0%, #348ac7 51%, #7474bf 100%);
+}
+.button {
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
   color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
 }
 
-.button:hover:not(:disabled) {
-  background: #1565c0;
+.button:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
 }
 
 .button:disabled {
@@ -160,11 +167,14 @@ label {
   border-radius: 4px;
   font-size: 14px;
   margin-top: 8px;
-  text-wrap-mode: nowrap;
 }
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
   margin-top: 12px;
+}
+
+.spacer {
+  margin-bottom: 20px;
 }

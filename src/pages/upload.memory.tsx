@@ -1,10 +1,71 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { useNavigate } from 'react-router-dom';
+import { MemoryMimeTypes } from '@/types/accepted.file.type';
 import { useApiFetch } from '@/utils/api.calls';
+
+import '../css/upload.css';
 
 export default function UploadMemoryPage() {
   const navigate = useNavigate();
   const { fetchData, loading, error } = useApiFetch();
+  const [files, setFiles] = useState<(File & { preview: string })[]>([]);
+
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    open: openFileDialog,
+  } = useDropzone({
+    accept: MemoryMimeTypes,
+    noClick: true,
+    onDrop: (acceptedFiles) => {
+      setFiles((prevFiles) => {
+        const newFiles = acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        );
+
+        const combined = [...prevFiles, ...newFiles];
+        const uniqueFiles = Array.from(
+          new Map(combined.map((file) => [file.name + file.size, file])).values()
+        );
+
+        setFormData({ ...formData, files: Array.from(uniqueFiles || []) });
+        return uniqueFiles;
+      });
+    },
+  });
+
+  const handleRemoveFile = (fileName: string) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      files: prevFormData.files.filter((file) => file.name !== fileName),
+    }));
+  };
+
+  const thumbs = files.map((file) => (
+    <div className="thumb" key={file.name}>
+      <div className="close" onClick={() => handleRemoveFile(file.name)}>
+        x
+      </div>
+      <div className="thumbInner">
+        <img
+          src={file.preview}
+          className="img"
+          onLoad={() => {
+            URL.revokeObjectURL(file.preview);
+          }}
+        />
+      </div>
+    </div>
+  ));
+
+  useEffect(() => {
+    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+  }, [files]);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -16,7 +77,6 @@ export default function UploadMemoryPage() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log('Form Data:', formData);
 
     const data = new FormData();
     data.append('title', formData.title);
@@ -35,7 +95,6 @@ export default function UploadMemoryPage() {
       },
       body: data,
     });
-    console.log('🚀 ~ handleSubmit ~ uploadedData:', uploadedData);
 
     if (uploadedData) {
       navigate(`/memories/${uploadedData?.title}`);
@@ -54,7 +113,6 @@ export default function UploadMemoryPage() {
           value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
-        <br />
         <label>Description:</label>
         <textarea
           id="description"
@@ -62,7 +120,6 @@ export default function UploadMemoryPage() {
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
         ></textarea>
-        <br />
         <label>Tags (comma separated):</label>
         <input
           id="tags"
@@ -71,7 +128,6 @@ export default function UploadMemoryPage() {
           value={formData.tags}
           onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
         />
-        <br />
         <label>Family Members (comma separated):</label>
         <input
           id="familyMembers"
@@ -80,17 +136,21 @@ export default function UploadMemoryPage() {
           value={formData.familyMembers}
           onChange={(e) => setFormData({ ...formData, familyMembers: e.target.value })}
         />
-        <br />
         <label>Upload Files:</label>
-        <input
-          type="file"
-          name="files"
-          multiple
-          onChange={(e) => setFormData({ ...formData, files: Array.from(e.target.files || []) })}
-        />
-        <br />
+        <div className="uploadContainer" {...getRootProps()}>
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <p>Drop the files here ...</p>
+          ) : (
+            <p>Drag some files here, or use the button below to upload files</p>
+          )}
+          <aside className="thumbsContainer">{thumbs}</aside>
+          <button className="button spacer" type="button" onClick={openFileDialog}>
+            Open
+          </button>
+        </div>
         {error && <div className="error-message">{error.message}</div>}
-        <button type="submit" className="button" disabled={loading}>
+        <button type="submit" className="button " disabled={loading}>
           {loading ? 'Uploading...' : 'Upload Memory'}
         </button>
       </form>

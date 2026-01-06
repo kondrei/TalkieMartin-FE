@@ -8,7 +8,7 @@
 .hero-card {
   border-radius: var(--radius-lg);
   padding: 24px 22px;
-  background: radial-gradient(circle at top right, #ffb28a 0%, #ff8a5c 40%, #ff5f6c 100%);
+  background: var(--gradient);
   color: #fff;
   position: relative;
   overflow: hidden;
@@ -176,19 +176,12 @@ a.photo-card {
   padding: 4px 10px;
   font-weight: 500;
 }
-/* 
-@media (max-width: 768px) {
-  .hero-row {
-    grid-template-columns: minmax(0, 1fr);
-  }
 
-  .gallery-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.photo-footer.left {
+  left: 10px;
+  right: auto;
 }
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .gallery-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-} */
+.photo-footer.right {
+  right: 10px;
+  left: auto;
+}
