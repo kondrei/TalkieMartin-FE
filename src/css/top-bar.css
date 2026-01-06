@@ -77,7 +77,7 @@ a:visited .brand {
   width: 32px;
   height: 32px;
   border-radius: 999px;
-  background: linear-gradient(135deg, #ffd66b, #ff8a5c);
+  background: var(--gradient);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,6 +85,7 @@ a:visited .brand {
   color: #fff;
   font-weight: 600;
 }
+
 
 /* Mobile adjustments */
 @media (max-width: 768px) {

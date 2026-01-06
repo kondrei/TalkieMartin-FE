@@ -11,6 +11,7 @@ export interface Memory {
   description: string;
   tags: string[];
   familyMembers: string[];
+  dateCreated: string;
   memoryContent: MemoryContent[];
 }
 
