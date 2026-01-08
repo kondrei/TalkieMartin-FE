@@ -8,6 +8,7 @@ export type UserData = {
   id: string;
   iat: number;
   exp: number;
+  sub: string;
 };
 
 class AuthService {

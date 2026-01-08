@@ -13,6 +13,7 @@ export interface Memory {
   familyMembers: string[];
   dateCreated: string;
   memoryContent: MemoryContent[];
+  userId: string;
 }
 
 export interface GalleryData {
