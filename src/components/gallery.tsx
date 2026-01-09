@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { GalleryData, Memory } from '@/types/gallery.type';
 import { useApiFetch } from '@/utils/api.calls';
 
+
 export default function Gallery() {
   const [gallery, setGallery] = useState<GalleryData | null>(null);
 
@@ -12,7 +13,7 @@ export default function Gallery() {
       const data: GalleryData = await fetchData(`${import.meta.env.VITE_API_URL}/memories`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/text',
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('authToken') || ''}`,
         },
       });
