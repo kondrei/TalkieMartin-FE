@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useUser } from '@/auth/UserContext';
+import DeleteMemoryDialog from '@/components/delete-memory-dialog';
+import OptionPanel from '@/components/option-panel';
 import { Memory } from '@/types/gallery.type';
 import { useApiFetch } from '@/utils/api.calls';
 import ErrorPage from './Error.page';
 
+
 export function Memories() {
   const { userData } = useUser();
   const { id } = useParams();
-  const navigate = useNavigate();
+
   const [memory, setMemory] = useState<Memory | null>(null);
   const { fetchData, loading, error } = useApiFetch();
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -20,7 +23,7 @@ export function Memories() {
       const data: Memory = await fetchData(`${import.meta.env.VITE_API_URL}/memories/${id}`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/text',
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('authToken') || ''}`,
         },
       });
@@ -33,21 +36,6 @@ export function Memories() {
   if (!id) {
     return <Navigate to="/" />;
   }
-
-  const deleteMemory = async () => {
-    await fetchData(`${import.meta.env.VITE_API_URL}/memories/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/text',
-        Authorization: `Bearer ${localStorage.getItem('authToken') || ''}`,
-      },
-    });
-    navigate('/');
-  };
-
-  const confirmDelete = () => {
-    dialogRef.current?.showModal();
-  };
 
   return (
     <div>
@@ -77,33 +65,8 @@ export function Memories() {
       )}
       {userData?.sub === memory?.userId && (
         <>
-          <details className="danger-accordion">
-            <summary>Options</summary>
-            <div className="button-group">
-              <button className="button">Edit Memory</button>
-              <button className="button warning" onClick={confirmDelete}>
-                Delete Memory
-              </button>
-            </div>
-          </details>
-          <dialog ref={dialogRef} className="delete-dialog">
-            <h2>Delete Memory?</h2>
-            <p>This action cannot be undone. All photos will be permanently deleted.</p>
-            <div className="dialog-actions">
-              <button className="button" onClick={() => dialogRef.current?.close()}>
-                Cancel
-              </button>
-              <button
-                className="button warning"
-                onClick={() => {
-                  dialogRef.current?.close();
-                  deleteMemory();
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          </dialog>
+          <OptionPanel dialogRef={dialogRef} />
+          <DeleteMemoryDialog dialogRef={dialogRef} id={id} />
         </>
       )}
     </div>

@@ -114,23 +114,48 @@ input.input-error {
   gap: 10px;
   justify-content: center;
 }
-.danger-accordion {
+.options-panel {
   margin-top: 12px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  padding: 8px 12px;
   background: #fafafa;
+  padding: 10px;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
 }
 
-.danger-accordion summary {
+.options-panel summary {
   cursor: pointer;
   font-weight: 600;
+  margin-bottom: 0;
+  transition: margin 0.3s ease-out;
+  list-style-position: inside;
+}
+
+.options-panel[open] summary {
   margin-bottom: 8px;
 }
 
-.danger-accordion[open] {
+.options-panel[open] {
   background: #fff3f3;
   border-color: #ffcdd2;
+  margin-bottom: 10px;
+}
+
+.options-panel .button-group {
+  animation: slideDown 0.3s ease-in-out;
+  transform-origin: top;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .delete-dialog {
@@ -139,7 +164,24 @@ input.input-error {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   padding: 24px;
   max-width: 400px;
-  margin:auto;
+  margin: auto;
+  animation: slideDown 0.3s ease-in-out;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.delete-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  animation: backdropFadeIn 1s ease-in-out;
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .delete-dialog h2 {
