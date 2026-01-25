@@ -6,6 +6,8 @@ import { useApiFetch } from '@/utils/api.calls';
 
 import '../css/upload.css';
 
+import Thumbnails from '@/components/thumbnails';
+
 export default function UploadMemoryPage() {
   const navigate = useNavigate();
   const { fetchData, loading, error } = useApiFetch();
@@ -47,20 +49,7 @@ export default function UploadMemoryPage() {
   };
 
   const thumbs = files.map((file) => (
-    <div className="thumb" key={file.name}>
-      <div className="close" onClick={() => handleRemoveFile(file.name)}>
-        x
-      </div>
-      <div className="thumbInner">
-        <img
-          src={file.preview}
-          className="img"
-          onLoad={() => {
-            URL.revokeObjectURL(file.preview);
-          }}
-        />
-      </div>
-    </div>
+    <Thumbnails key={file.name} file={file} handleRemoveFile={handleRemoveFile} />
   ));
 
   useEffect(() => {

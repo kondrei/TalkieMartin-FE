@@ -14,6 +14,7 @@ export interface Memory {
   dateCreated: string;
   memoryContent: MemoryContent[];
   userId: string;
+  deletedFiles?: string[];
 }
 
 export interface GalleryData {

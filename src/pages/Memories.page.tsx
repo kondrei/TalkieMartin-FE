@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useUser } from '@/auth/UserContext';
-import DeleteMemoryDialog from '@/components/delete-memory-dialog';
-import OptionPanel from '@/components/option-panel';
+import DeleteMemoryDialog from '@/components/delete.memory.dialog';
+import OptionPanel from '@/components/option.panel';
 import { Memory } from '@/types/gallery.type';
 import { useApiFetch } from '@/utils/api.calls';
 import ErrorPage from './Error.page';
@@ -47,13 +47,16 @@ export function Memories() {
         <p>Loading...</p>
       ) : null}
 
-      {memory?.memoryContent?.length && (
+      {memory?.memoryContent && memory?.memoryContent?.length > 0 && (
         <>
           <h1>{memory?.title}</h1>
+          <p>{memory?.description}</p>
           {memory?.memoryContent.map((content, index) => (
             <div key={index} className="photo-card">
               <div className="photo-top">
-                <div className="photo-badge">{content.description}</div>{' '}
+                {content.description && (
+                  <div className="photo-badge">{content.description}</div>
+                )}{' '}
               </div>
               <div className="photo-footer">
                 {new Date(content.dateCreated).toLocaleDateString('ro-RO')}
@@ -65,7 +68,7 @@ export function Memories() {
       )}
       {userData?.sub === memory?.userId && (
         <>
-          <OptionPanel dialogRef={dialogRef} />
+          <OptionPanel dialogRef={dialogRef} id={id || ''} />
           <DeleteMemoryDialog dialogRef={dialogRef} id={id} />
         </>
       )}
