@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RequireAuth from './auth/RequireAuth';
 import Logout from './components/logout';
+import EditPage from './pages/edit.page';
 import ErrorPage from './pages/Error.page';
 import { HomeContent, HomePage } from './pages/Home.page';
 import Login from './pages/Login.page';
@@ -29,6 +30,14 @@ export function Router() {
           element: (
             <RequireAuth>
               <UploadMemoryPage />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'edit/:id?',
+          element: (
+            <RequireAuth>
+              <EditPage />
             </RequireAuth>
           ),
         },
